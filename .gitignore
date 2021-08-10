@@ -1,0 +1,10 @@
+# Packages
+/node_modules
+package-lock.json
+
+#misc
+/.vscode
+.DS_Store
+.Trashes
+ehthumbs.db
+Thumbs.db

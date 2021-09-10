@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "date-fns": "^2.23.0",
     "materialize-css": "^1.0.0"
   }
 }

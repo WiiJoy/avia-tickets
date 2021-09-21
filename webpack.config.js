@@ -3,6 +3,7 @@ const autoprefixer = require('autoprefixer'); // проставлять преф
 const precss = require('precss'); // модуль для css
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // для работы с html файлами
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = { // модуль экспорта
   // Итак,  чтобы вебпак начал свою работу, нужно указать главный (основной) файл, который будет включать в себя все другие необходимые файлы (модули).
@@ -77,6 +78,7 @@ module.exports = { // модуль экспорта
   //Например, плагин для минификации кода (во время сборки код подвергается очистке и минификации).
   //Или плагин для сборки html страницы и css кода (скрипты вставляются в html, куски css собираются в один файл).
   plugins: [
+    new CleanWebpackPlugin(), // - для очистки папки dist при создании прод-билда
     new MiniCssExtractPlugin({ filename: './style.css' }),
     new HtmlWebpackPlugin({
       template: 'index.html',

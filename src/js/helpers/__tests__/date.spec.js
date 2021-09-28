@@ -1,5 +1,5 @@
 // import { it } from 'date-fns/locale';
-import {formatDate} from './date';
+import {formatDate} from '../date';
 
 describe('formatDate', () => {
     it('check format', () => {

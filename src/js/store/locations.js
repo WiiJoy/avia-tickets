@@ -1,13 +1,13 @@
 import api from '../services/apiService';
 import { formatDate } from '../helpers/date';
 
-class Locations {
+export class Locations {
     constructor(api, helpers) {
         this.api = api;
         this.countries = null;
         this.cities = null;
-        this.shortCitiesList = null;
-        this.airlines = null;
+        this.shortCitiesList = {};
+        this.airlines = {};
         this.formatDate = helpers.formatDate;
     }
 
@@ -57,6 +57,7 @@ class Locations {
 
     serializeCountries(countries) {
         // { 'Country code': { ... } }
+        if (!Array.isArray(countries) || !countries.length) return {};
         return countries.reduce((acc, country) => {
             acc[country.code] = country;
             return acc;
@@ -74,6 +75,7 @@ class Locations {
                 countryName,
                 fullName,
             };
+            console.log(acc);
             return acc;
         }, {});
     }

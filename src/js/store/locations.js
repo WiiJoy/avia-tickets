@@ -75,16 +75,16 @@ export class Locations {
                 countryName,
                 fullName,
             };
-            console.log(acc);
             return acc;
         }, {});
     }
 
     serializeAirlines(airlines) {
         return airlines.reduce((acc, item) => {
-            item.logo = `http://pics.avs.io/200/200/${item.code}.png`;
-            item.name = item.name || item.name_translations.en;
-            acc[item.code] = item;
+            const itemCopy = {...item};
+            itemCopy.logo = `http://pics.avs.io/200/200/${item.code}.png`;
+            itemCopy.name = itemCopy.name || itemCopy.name_translations.en;
+            acc[itemCopy.code] = itemCopy;
             return acc;
         }, {});
     }

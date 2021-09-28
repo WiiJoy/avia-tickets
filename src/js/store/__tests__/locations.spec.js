@@ -4,10 +4,26 @@ import api, { Api } from '../../services/apiService';
 
 const countries = [{ code: 'UKR', name: 'Ukraine' }];
 const cities = [{ country_code: 'UKR', name: 'Kharkiv', code: 'KH' }];
+const airlines = [{ country_code: 'UKR', name: 'Airlines', code: 'AVIA' }];
+
+jest.mock('../../services/apiService', () => {
+    const mockApi = {
+        countries: jest.fn(() => Promise.resolve([{ code: 'UKR', name: 'Ukraine' }])),
+        cities: jest.fn(() => Promise.resolve([{ country_code: 'UKR', name: 'Kharkiv', code: 'KH' }])),
+        airlines: jest.fn(() => Promise.resolve([{ country_code: 'UKR', name: 'Airlines', code: 'AVIA' }])),
+    };
+
+    return {
+        Api: jest.fn(() => mockApi)
+    };
+});
+
+const apiService = new Api();
 
 describe('Locations store tests', () => {
     beforeEach(() => {
         locationsInstance.countries = locationsInstance.serializeCountries(countries);
+        locationsInstance.cities = locationsInstance.serializeCities(cities);
     });
 
     it('Check that locationsInstance is instance of Locations class', () => {
@@ -35,5 +51,19 @@ describe('Locations store tests', () => {
         const expectedData = {};
 
         expect(res).toEqual(expectedData);
+    });
+
+    it('Check correct cities serialize', () => {
+        const res = locationsInstance.serializeCities(cities);
+        const expectedData = {
+            KH: { country_code: 'UKR', name: 'Kharkiv', code: 'KH', countryName: 'Ukraine', fullName: 'Kharkiv,Ukraine' }
+        };
+
+        expect(res).toEqual(expectedData);
+    });
+
+    it('Check correct init method call', () => {
+        const instance = new Locations(apiService, { formatDate });
+        expect(instance.init()).resolves.toEqual([countries, cities, airlines]);
     });
 });
